@@ -1,0 +1,12 @@
+*.swp
+*.txt
+*.o
+*.zip
+*xcode*
+build*
+a.out
+*gch
+*.xcodeproj/*
+tests/*
+build/*
+.DS_Store
