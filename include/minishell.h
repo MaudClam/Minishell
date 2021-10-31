@@ -28,7 +28,7 @@
 typedef enum e_TokenType	t_TokenType;
 typedef struct s_Token		t_Token;
 typedef struct s_TokenList	t_TokenList;
-typedef struct s_ParseTree	t_ParseTree;
+typedef struct s_ASTree	t_ASTree;
 typedef struct s_var		t_var;
 
 struct s_var
@@ -39,8 +39,8 @@ struct s_var
 	char			**env;
 	char			*line;
 	unsigned int	offset;
-	t_ParseTree		*tree;
 	t_TokenList		*tokenList;
+	t_ASTree		*tree;
 };
 
 # define TRUE			1
@@ -54,18 +54,23 @@ struct s_var
 # define GRAY			"\033[37m"
 # define TURQUOISE		"\033[36m"
 # define RED			"\033[31m"
-# define MEMORY_ERROR	"unable to allocate memory"
+/*
+** 		executer.c
+*/
+void	execute_ASTree(t_var *v);
 /*
 ** 		utils.c
 */
 int		do_exit(char *str);
-int		err_exit(char *str, int err);
 char	*get_env(char **env, char *name);
 void	handle_ctrlc(int status);
 void	handle_ctrlc_(int status);
+char	*type2char(t_TokenType type);
 /*
 ** 		utils1.c
 */
-char	*type2char(t_TokenType type);
+void	print_Token(t_Token *token);
+void	print_TokenList(t_TokenList *tokenList);
+void	print_ASTree(t_ASTree *tree);
 
 #endif

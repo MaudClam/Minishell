@@ -15,24 +15,22 @@
 
 # include "minishell.h"
 
-typedef enum e_TokenType	t_TokenType;
-typedef struct s_Token		t_Token;
-typedef struct s_TokenList	t_TokenList;
-typedef struct s_ParseTree	t_ParseTree;
-typedef struct s_var		t_var;
+typedef enum e_TokenType		t_TokenType;
+typedef struct s_Token			t_Token;
+typedef struct s_TokenList		t_TokenList;
+typedef struct s_ASTree			t_ASTree;
+typedef struct s_var			t_var;
 
-# define TOKEN_TYPES_SET	"EMPTY,BLANK,WORD,PIPE_SYMBOL,REDIRECT_SYMBOL,\
-COMMAND_OPTION,COMMAND,COMMAND_PREFIX,COMMAND_WORD,COMMAND_SUFFIX,VARIABLE,\
+# define TOKEN_TYPES_SET		"EMPTY,BLANK,WORD,PIPE_SYMBOL,REDIRECT_SYMBOL,\
+COMMAND_OPTION,COMMAND_PREFIX,COMMAND,COMMAND_WORD,COMMAND_SUFFIX,VARIABLE,\
 PIPE_SEQUENCE,REDIRECT_SEQUENCE,END,"
-# define BLANK_CHARSET		" \t\n\v\f\r"
-# define QUOTES_CHARSET		"\"\'"
-# define WORD_CHARSET		"!$#%&()*+,-./=?_\
+# define BLANK_CHARSET			" \t\n\v\f\r"
+# define QUOTES_CHARSET			"\"\'"
+# define WORD_CHARSET			"!$#%&()*+,-./=?_\
 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-# define PIPE_CHARSET 		"|"
-# define REDIRECT_CHARSET	"<>"
+# define PIPE_CHARSET 			"|"
+# define REDIRECT_CHARSET		"<>"
 # define COMMAND_OPTION_CHARSET	"-"
-# define TYPE2CHAR_ERROR	"forbidden argument in type2char()"
-# define SYNTAX_ERROR		"incorrect syntax"
 
 enum e_TokenType
 {
@@ -42,8 +40,8 @@ enum e_TokenType
 	PIPE_SYMBOL,
 	REDIRECT_SYMBOL,
 	COMMAND_OPTION,
-	COMMAND,
 	COMMAND_PREFIX,
+	COMMAND,
 	COMMAND_WORD,
 	COMMAND_SUFFIX,
 	VARIABLE,
@@ -83,7 +81,11 @@ size_t	lexeme_COMMAND_OPTION(const char *str, t_Token *token);
 /*
 **		lexer2.c
 */
-void	print_Token(t_Token *token);
-int		singleTokenTemplate(t_TokenList **token, t_ParseTree **tree, \
+int		checkToken_stepTokenList(t_TokenList **tokenList, t_ASTree **tree, \
 												t_TokenType type, char *lexeme);
+int		is_PIPE_SYMBOL(t_TokenList **tokenList, t_ASTree **tree);
+int		is_REDIRECT_SYMBOL(t_TokenList **tokenList, t_ASTree **tree);
+int		is_END(t_TokenList **tokenList, t_ASTree **tree);
+int		is_WORD(t_TokenList **tokenList, t_ASTree **tree);
+
 #endif

@@ -36,7 +36,7 @@ void	build_tokenList(t_var *v)
 		if (token->type != BLANK)
 			token = new_tokenAdd(NULL, EMPTY, &v->tokenList);
 	}
-	token = new_tokenAdd(NULL, END, &v->tokenList);
+	new_tokenAdd(NULL, END, &v->tokenList);
 }
 
 t_Token	*new_tokenAdd(char *lexeme, t_TokenType type, t_TokenList **tokenList)
@@ -59,7 +59,7 @@ t_Token	*new_token(char *lexeme, t_TokenType type)
 		token->type = type;
 	}
 	else
-		err_exit(MEMORY_ERROR, errno);
+		ft_error_exit(strerror(ENOMEM), ENOMEM);
 	return (token);
 }
 
@@ -84,7 +84,7 @@ void	tokenAdd_back(t_TokenList **tokenList, t_Token *token)
 			*tokenList = new;
 	}
 	else
-		err_exit(MEMORY_ERROR, errno);
+		ft_error_exit(strerror(ENOMEM), ENOMEM);
 }
 
 size_t	lexeme_BLANK(const char *str, t_Token *token)
@@ -96,7 +96,7 @@ size_t	lexeme_BLANK(const char *str, t_Token *token)
 		i++;
 	token->lexeme = ft_substr_lc(str, 0, i);
 	if (!token->lexeme)
-		err_exit(MEMORY_ERROR, errno);
+		ft_error_exit(strerror(ENOMEM), ENOMEM);
 	token->type = BLANK;
 	return (i);
 }

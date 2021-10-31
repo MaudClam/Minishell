@@ -1,34 +1,32 @@
-pipe_sequence    : command | pipe_sequence '|' command
+PIPE_SEQUENCE	: COMMAND | PIPE_SEQUENCE '|' COMMAND
 
-command          : simple_command
+COMMAND			: COMMAND_PREFIX	COMMAND_WORD COMMAND_SUFFIX
+				| COMMAND_PREFIX	COMMAND_WORD
+				| COMMAND_PREFIX
+				| COMMAND_NAME		COMMAND_SUFFIX
+				| COMMAND_NAME
 
-simple_command   : cmd_prefix cmd_word cmd_suffix
-                 | cmd_prefix cmd_word
-                 | cmd_prefix
-                 | cmd_name cmd_suffix
-                 | cmd_name
+COMMAND_PREFIX	:            		IO_REDIRECT
+				| COMMAND_PREFIX	IO_REDIRECT
+				|					ASSIGNMENT_WORD
+				| COMMAND_PREFIX	ASSIGNMENT_WORD
 
-cmd_prefix       :            io_redirect
-                 | cmd_prefix io_redirect
-                 |            ASSIGNMENT_WORD
-                 | cmd_prefix ASSIGNMENT_WORD
+COMMAND_SUFFIX	:					IO_REDIRECT
+				| COMMAND_SUFFIX	IO_REDIRECT
+				|					WORD
+				| COMMAND_SUFFIX	WORD
 
-cmd_suffix       :            io_redirect
-                 | cmd_suffix io_redirect
-                 |            WORD
-                 | cmd_suffix WORD
+IO_REDIRECT		:					IO_FILE
+				| IO_NUMBER			IO_FILE
+				|					IO_HERE
+				| IO_NUMBER			IO_HERE
 
-io_redirect      :           io_file
-                 | IO_NUMBER io_file
-                 |           io_here
-                 | IO_NUMBER io_here
+IO_FILE			: '<'				FILENAME
+				| LESSAND			FILENAME
+				| '>'				FILENAME
+				| GREATAND			FILENAME
+				| DGREAT			FILENAME
+				| LESSGREAT			FILENAME
+				| CLOBBER			FILENAME
 
-io_file          : '<'       filename
-                 | LESSAND   filename
-                 | '>'       filename
-                 | GREATAND  filename
-                 | DGREAT    filename
-                 | LESSGREAT filename
-                 | CLOBBER   filename
-
-filename         : WORD
+FILENAME		: WORD

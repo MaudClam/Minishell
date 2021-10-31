@@ -12,35 +12,59 @@
 
 #include "lexer.h"
 
-void	print_Token(t_Token *token)
-{
-	printf("<'%s', %s>\n", token->lexeme, type2char(token->type));
-}
-
-int	singleTokenTemplate(t_TokenList **token, t_ParseTree **tree, \
+int	checkToken_stepTokenList(t_TokenList **tokenList, t_ASTree **tree, \
 												t_TokenType type, char *lexeme)
 {
-	t_TokenList	*current;
-	t_Token		*newToken;
-
-	if (!token || !*token || !tree || !*tree || lexeme)
+	if (!tokenList || !tree || (!type && !lexeme))
+		return (ft_error_msg(\
+		"Error: bad arguments checkToken_stepTokenList()", PARSING_ERROR));
+	if (*tokenList == NULL)
 		return (PARSING_ERROR);
-	current = *token;
-	if (current->token->type != type)
+	if ((*tokenList)->token->type != type)
 	{
-		printf("Expecting <%s>, Found <%s>\n", type2char(type), \
-											type2char(current->token->type));
+		printf("Expecting <%s>, found <%s>\n", type2char(type), \
+										type2char((*tokenList)->token->type));
 		return (PARSING_ERROR);
 	}
-	if (ft_strcmp(current->token->lexeme, lexeme))
+	if (ft_strcmp((*tokenList)->token->lexeme, lexeme) != SUCCESS)
 	{
-		printf("Expecting %s, Found %s\n", lexeme, current->token->lexeme);
+		printf("Expecting %s, found %s\n", lexeme, (*tokenList)->token->lexeme);
 		return (PARSING_ERROR);
 	}
-	newToken = new_token(current->token->lexeme, current->token->type);
-	(*tree)->data = newToken;
-	(*tree)->child = NULL;
-	(*tree)->sibling = NULL;
-	*token = current->next;
-	return (SUBTREE_SUCCESS);
+	*tree = alloc_ASTree();
+	(*tree)->data = new_token((*tokenList)->token->lexeme, \
+													(*tokenList)->token->type);
+	*tokenList = (*tokenList)->next;
+	return (SUCCESS);
 }
+
+int	is_PIPE_SYMBOL(t_TokenList **tokenList, t_ASTree **tree)
+{
+	return (checkToken_stepTokenList(tokenList, tree, PIPE_SYMBOL, NULL));
+}
+
+int	is_REDIRECT_SYMBOL(t_TokenList **tokenList, t_ASTree **tree)
+{
+	return (checkToken_stepTokenList(tokenList, tree, REDIRECT_SYMBOL, NULL));
+}
+
+int	is_END(t_TokenList **tokenList, t_ASTree **tree)
+{
+	return (checkToken_stepTokenList(tokenList, tree, END, NULL));
+}
+
+int	is_WORD(t_TokenList **tokenList, t_ASTree **tree)
+{
+	return (checkToken_stepTokenList(tokenList, tree, WORD, NULL));
+}
+
+
+
+
+
+
+
+
+
+
+

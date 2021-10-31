@@ -15,16 +15,18 @@
 static void	minishell(t_var *v)
 {
 	build_tokenList(v);
+	if (v->tokenList->token->type != END)
+		if(build_ASTree(&v->tokenList, &v->tree) == SUCCESS)
+			execute_ASTree(v);
 }
 
 static char	*prompt(t_var *v)
 {
 	char	*prompt;
 
-	prompt = ft_strjoin_lc(get_env(v->env, "PWD"), \
-											"/" BOLD " $ " DEFAULT);
+	prompt = ft_strjoin_lc(get_env(v->env, "PWD"), "/" BOLD " $ " DEFAULT);
 	if (!prompt)
-		err_exit(MEMORY_ERROR, errno);
+		ft_error_exit(strerror(ENOMEM), ENOMEM);
 	return (prompt);
 }
 
@@ -45,11 +47,11 @@ static void	init_var(t_var *v, char **env)
 		{
 			v->env[i] = ft_strdup_lc(env[i]);
 			if (!v->env[i])
-				err_exit(MEMORY_ERROR, errno);
+				ft_error_exit(strerror(ENOMEM), ENOMEM);
 		}
 	}
 	else
-		err_exit(MEMORY_ERROR, errno);
+		ft_error_exit(strerror(ENOMEM), ENOMEM);
 }
 
 int	main(int argc, char **argv, char **env)
