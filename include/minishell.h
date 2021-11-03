@@ -27,19 +27,20 @@
 
 typedef enum e_TokenType	t_TokenType;
 typedef struct s_Token		t_Token;
-typedef struct s_TokenList	t_TokenList;
-typedef struct s_ASTree	t_ASTree;
+typedef struct s_tokenLst	t_tokenLst;
+typedef struct s_ASTree		t_ASTree;
 typedef struct s_var		t_var;
 
 struct s_var
 {
+	char			debug;
 	int				fd;
 	int				status;
 	int				exit;
 	char			**env;
 	char			*line;
 	unsigned int	offset;
-	t_TokenList		*tokenList;
+	t_tokenLst		*tokenLst;
 	t_ASTree		*tree;
 };
 
@@ -47,6 +48,7 @@ struct s_var
 # define FALSE			0
 # define ERROR			-1
 # define SUCCESS		0
+# define DEBUG_OPTION	"-d"
 # define DEFAULT		"\033[0m"
 # define BOLD			"\033[1m"
 # define YELLOW			"\033[33m"
@@ -54,6 +56,9 @@ struct s_var
 # define GRAY			"\033[37m"
 # define TURQUOISE		"\033[36m"
 # define RED			"\033[31m"
+# define PROMPT_S1		"minishell: "
+# define PROMPT_S2		""
+# define PROMPT_S3		""
 /*
 ** 		executer.c
 */
@@ -70,7 +75,7 @@ char	*type2char(t_TokenType type);
 ** 		utils1.c
 */
 void	print_Token(t_Token *token);
-void	print_TokenList(t_TokenList *tokenList);
+void	print_tokenLst(t_tokenLst *tokenLst);
 void	print_ASTree(t_ASTree *tree);
 
 #endif

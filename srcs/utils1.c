@@ -14,28 +14,37 @@
 
 void	print_Token(t_Token *token)
 {
-	printf("<'%s', %s>\n", token->lexeme, type2char(token->type));
+	if (token->lexeme == NULL)
+		printf("<%s> ", type2char(token->type));
+	else
+		printf("<%s '%s'> ", type2char(token->type), token->lexeme);
 }
 
-void	print_TokenList(t_TokenList *tokenList)
+void	print_tokenLst(t_tokenLst *tokenLst)
 {
-	while (tokenList && tokenList->next)
+	while (tokenLst && tokenLst->next)
 	{
-		print_Token(tokenList->token);
-		tokenList = tokenList->next;
+		print_Token(tokenLst->token);
+		tokenLst = tokenLst->next;
 	}
+	print_Token(tokenLst->token);
+	printf("\n");
 }
 
 static void	print_PT(t_ASTree *tree, int indent)
 {
 	t_ASTree	*sibl;
 	t_ASTree	*chld;
+	int			space;
 
+	space = indent;
 	if (tree)
 	{
-		while (--indent >= 0)
-			ft_putchar_fd(' ', STDOUT_FILENO);
+		while (--space >= 0)
+			printf(" ");
 		print_Token(tree->data);
+		printf("\n");
+		space = indent + PRN_PTREE_INDENT;
 		sibl = tree->sibl;
 		chld = tree->chld;
 		print_PT(chld, indent + PRN_PTREE_INDENT);

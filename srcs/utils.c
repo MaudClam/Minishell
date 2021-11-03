@@ -38,12 +38,12 @@ char	*get_env(char **env, char *name)
 		if (split && ft_strcmp(split[0], name) == SUCCESS)
 		{
 			getenv = ft_strdup(split[1]);
-			if (!getenv)
+			if (getenv == NULL)
 				ft_error_exit(strerror(ENOMEM), ENOMEM);
 			lc(FREE_TO_FIX);
 			return (lc(getenv));
 		}
-		else if (!split)
+		else if (split == NULL)
 			ft_error_exit(strerror(ENOMEM), ENOMEM);
 		i++;
 	}
@@ -71,7 +71,7 @@ char	*type2char(t_TokenType type)
 	static char		**tokenTypes;
 	static size_t	arrsize;
 
-	if (!tokenTypes)
+	if (tokenTypes == NULL)
 	{
 		tokenTypes = ft_splitset_lc(TOKEN_TYPES_SET, ",; |");
 		if (tokenTypes)
@@ -79,7 +79,7 @@ char	*type2char(t_TokenType type)
 	}
 	if (tokenTypes && type >= 0 && type < arrsize)
 		return (tokenTypes[type]);
-	else if (!tokenTypes)
+	else if (tokenTypes == NULL)
 		ft_error_exit(strerror(ENOMEM), ENOMEM);
 	ft_putendl_fd("Error: forbidden argument in type2char()", STDOUT_FILENO);
 	return (NULL);

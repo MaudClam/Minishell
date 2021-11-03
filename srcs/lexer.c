@@ -12,15 +12,15 @@
 
 #include "lexer.h"
 
-void	build_tokenList(t_var *v)
+void	build_tokenLst(t_var *v)
 {
 	t_Token		*token;
 
-	token = new_tokenAdd(NULL, EMPTY, &v->tokenList);
+	token = new_tokenAdd(NULL, END, &v->tokenLst);
 	while (v->line[v->offset] != '\0')
 	{
 		if (ft_isinset(v->line[v->offset], BLANK_CHARSET) == TRUE)
-			v->offset += lexeme_BLANK(&v->line[v->offset], token);
+			v->offset += lexeme_BLANK(&v->line[v->offset]);
 		else if (ft_isinset(v->line[v->offset], QUOTES_CHARSET) == TRUE)
 			v->offset += lexeme_QUOTED_WORD(&v->line[v->offset], token);
 		else if (ft_isinset(v->line[v->offset], WORD_CHARSET) == TRUE)
@@ -33,18 +33,19 @@ void	build_tokenList(t_var *v)
 			v->offset += lexeme_COMMAND_OPTION(&v->line[v->offset], token);
 		else
 			v->offset++;
-		if (token->type != BLANK)
-			token = new_tokenAdd(NULL, EMPTY, &v->tokenList);
+		if (token->type != END)
+			token = new_tokenAdd(NULL, END, &v->tokenLst);
 	}
-	new_tokenAdd(NULL, END, &v->tokenList);
+	if (token->type != END)
+		new_tokenAdd(NULL, END, &v->tokenLst);
 }
 
-t_Token	*new_tokenAdd(char *lexeme, t_TokenType type, t_TokenList **tokenList)
+t_Token	*new_tokenAdd(char *lexeme, t_TokenType type, t_tokenLst **tokenLst)
 {
 	t_Token	*token;
 
 	token = new_token(lexeme, type);
-	tokenAdd_back(tokenList, token);
+	tokenAdd_back(tokenLst, token);
 	return (token);
 }
 
@@ -63,13 +64,13 @@ t_Token	*new_token(char *lexeme, t_TokenType type)
 	return (token);
 }
 
-void	tokenAdd_back(t_TokenList **tokenList, t_Token *token)
+void	tokenAdd_back(t_tokenLst **tokenLst, t_Token *token)
 {
-	t_TokenList	*tmp;
-	t_TokenList	*new;
+	t_tokenLst	*tmp;
+	t_tokenLst	*new;
 
-	tmp = *tokenList;
-	new = lc(malloc(sizeof(t_TokenList)));
+	tmp = *tokenLst;
+	new = lc(malloc(sizeof(t_tokenLst)));
 	if (new)
 	{
 		new->token = token;
@@ -81,22 +82,18 @@ void	tokenAdd_back(t_TokenList **tokenList, t_Token *token)
 			tmp->next = new;
 		}
 		else
-			*tokenList = new;
+			*tokenLst = new;
 	}
 	else
 		ft_error_exit(strerror(ENOMEM), ENOMEM);
 }
 
-size_t	lexeme_BLANK(const char *str, t_Token *token)
+size_t	lexeme_BLANK(const char *str)
 {
 	size_t	i;
 
 	i = 0;
 	while (ft_isinset(str[i], BLANK_CHARSET) == TRUE)
 		i++;
-	token->lexeme = ft_substr_lc(str, 0, i);
-	if (!token->lexeme)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
-	token->type = BLANK;
 	return (i);
 }
