@@ -27,20 +27,20 @@
 
 typedef enum e_TokenType	t_TokenType;
 typedef struct s_Token		t_Token;
-typedef struct s_tokenLst	t_tokenLst;
+typedef struct s_TokenLst	t_TokenLst;
 typedef struct s_ASTree		t_ASTree;
 typedef struct s_var		t_var;
 
 struct s_var
 {
-	char			debug;
+	int				debug;
 	int				fd;
+	char			*prompt;
 	int				status;
 	int				exit;
 	char			**env;
 	char			*line;
-	unsigned int	offset;
-	t_tokenLst		*tokenLst;
+	t_TokenLst		*tokenLst;
 	t_ASTree		*tree;
 };
 
@@ -74,8 +74,12 @@ char	*type2char(t_TokenType type);
 /*
 ** 		utils1.c
 */
-void	print_Token(t_Token *token);
-void	print_tokenLst(t_tokenLst *tokenLst);
+void	print_TokenLst(t_TokenLst *tokenLst);
 void	print_ASTree(t_ASTree *tree);
+void	print_welcomemsg(void);
+/*
+** 		utils2.c
+*/
+void	print_errsyntax(char *str);
 
 #endif

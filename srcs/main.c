@@ -15,16 +15,21 @@
 static void	minishell(t_var *v)
 {
 	v->tokenLst = NULL;
-	v->tree = NULL;
-	v->offset = 0;
-	build_tokenLst(v);
-	if (v->debug == TRUE)
-		print_tokenLst(v->tokenLst);
-	if (v->tokenLst->token->type != END)
-		if (build_ASTree(&v->tokenLst, &v->tree) == SUCCESS)
-			execute_ASTree(v);
-	if (v->debug == TRUE)
-		print_ASTree(v->tree);
+	if (build_tokenList(v->line, &v->tokenLst) == SUCCESS)
+	{
+		if (v->debug == TRUE)
+			print_TokenLst(v->tokenLst);
+		v->tree = NULL;
+		if (v->tokenLst->token->type != END)
+		{
+			if (build_ASTree(&v->tokenLst, &v->tree) == SUCCESS)
+			{
+				if (v->debug == TRUE)
+					print_ASTree(v->tree);
+				execute_ASTree(v);
+			}
+		}
+	}
 }
 
 static char	*prompt(t_var *v, char *s1, char *s2, char *s3)
@@ -42,11 +47,11 @@ static void	init_var(t_var *v, int argc, char **argv, char **env)
 	int	i;
 
 	ft_bzero(v, sizeof(t_var));
-	if (argc > 0 && ft_strcmp(argv[1], DEBUG_OPTION) == SUCCESS)
-	{
+	type2char(0);
+	if (argc > 1 && ft_strcmp(argv[1], DEBUG_OPTION) == SUCCESS)
 		v->debug = TRUE;
-		v->line = type2char(0);
-	}
+	else
+		print_welcomemsg();
 	v->fd = dup(1);
 	i = 0;
 	while (env && env[i])
@@ -77,17 +82,19 @@ int	main(int argc, char **argv, char **env)
 	while (!v.exit)
 	{
 		signal(SIGINT, handle_ctrlc);
-		v.line = lc(readline(prompt(&v, PROMPT_S1, PROMPT_S2, PROMPT_S3)));
+		v.prompt = prompt(&v, PROMPT_S1, PROMPT_S2, PROMPT_S3);
+		v.line = lc(readline(v.prompt));
 		if (v.line == NULL)
-			do_exit("exit\n");
-		signal(SIGINT, handle_ctrlc_);
-		if (v.line && *v.line)
+			break ;
+		if (*v.line)
 		{
 			add_history(v.line);
+			signal(SIGINT, handle_ctrlc_);
 			minishell(&v);
 		}
 		lc(FREE_TO_FIX);
 	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	lc(FREE_ALL);
-	return (0);
+	return (SUCCESS);
 }

@@ -63,6 +63,7 @@ void	handle_ctrlc(int status)
 void	handle_ctrlc_(int status)
 {
 	ft_putendl_fd("", STDOUT_FILENO);
+	rl_on_new_line();
 	(void)status;
 }
 

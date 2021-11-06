@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mclam <mclam@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 13:34:10 by mclam             #+#    #+#             */
-/*   Updated: 2021/10/30 13:34:10 by mclam            ###   ########.fr       */
+/*   Created: 2021/11/04 22:58:27 by mclam             #+#    #+#             */
+/*   Updated: 2021/11/04 22:58:27 by mclam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_ASTree(t_var *v)
+void	print_errsyntax(char *str)
 {
-	if (v->debug == TRUE)
-		printf("============EXECUTING HERE============\n");
-	(void)v->env;
+	ft_putstr_fd("minishell: syntax error near unexpected token '", \
+																STDOUT_FILENO);
+	ft_putstr_fd(str, STDOUT_FILENO);
+	ft_putstr_fd("'\n", STDOUT_FILENO);
 }

@@ -9,7 +9,8 @@ SRCS			=   srcs/main.c \
 					srcs/parser2.c \
 					srcs/executer.c \
 					srcs/utils.c \
-					srcs/utils1.c
+					srcs/utils1.c \
+					srcs/utils2.c
 
 LIBFT			=	${LIBFTDIR}libft.a
 LIBFTDIR		=	libft/
