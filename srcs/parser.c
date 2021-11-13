@@ -12,61 +12,63 @@
 
 #include "parser.h"
 
-int	build_ASTree(t_TokenLst **tokenLst, t_ASTree **tree)
+int	build_astree(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	if (is_PIPE_SEQUENCE(tokenLst, tree) == SUCCESS)
+	if (is_pipe_sequence(tokenLst, tree) == SUCCESS)
 		return (SUCCESS);
 	return (ERROR);
 }
 
-t_ASTree	*alloc_ASTree(void)
+t_ASTree	*alloc_astree(void)
 {
 	t_ASTree	*tree;
 
 	tree = ft_calloc_lc(sizeof(t_ASTree), 1);
 	if (tree == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	return (tree);
 }
 
-t_ASTree	*alloc_ASTreeToken(char *lexeme, t_TokenType type)
+t_ASTree	*alloc_ast_token(char *lexeme, t_TokenType type)
 {
 	t_ASTree	*tree;
 
-	tree = alloc_ASTree();
+	tree = alloc_astree();
 	tree->data = new_token(lexeme, type);
 	return (tree);
 }
 
-int	is_PIPE_SEQUENCE(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_pipe_sequence(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, PIPE_SEQUENCE);
-	if (is_COMMAND(tokenLst, &(*tree)->chld) == SUCCESS)
+	*tree = alloc_ast_token(NULL, PIPE_SEQUENCE);
+	if (is_command(tokenLst, &(*tree)->chld) == SUCCESS)
 	{
 		if ((*tokenLst)->token->type == END)
 		{
-			if (is_END(tokenLst, &(*tree)->sibl) == SUCCESS)
+			if (is_end(tokenLst, &(*tree)->sibl) == SUCCESS)
 				return (SUCCESS);
 		}
 		else if ((*tokenLst)->token->type == PIPE_SYMBOL)
 		{
-			if (is_PIPE_SYMBOL(tokenLst, &(*tree)->sibl) == SUCCESS)
-				if (is_PIPE_SEQUENCE(tokenLst, &(*tree)->sibl->sibl) == SUCCESS)
+			if (is_pipe_symbol(tokenLst, &(*tree)->sibl) == SUCCESS)
+				if (is_pipe_sequence(tokenLst, &(*tree)->sibl->sibl) == \
+																		SUCCESS)
 					return (SUCCESS);
 		}
 	}
 	*tree = NULL;
+	syntax_errmsg((*tokenLst)->token->lexeme);
 	return (PARSING_ERROR);
 }
 
-int	is_COMMAND(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_command(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, COMMAND);
-	if (is_COMMAND_PREFIX(tokenLst, &(*tree)->chld) == SUCCESS)
+	*tree = alloc_ast_token(NULL, COMMAND);
+	if (is_command_prefix(tokenLst, &(*tree)->chld) == SUCCESS)
 	{
-		if (is_COMMAND_WORD(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+		if (is_command_word(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 		{
-			if (is_COMMAND_SUFFIX(tokenLst, &(*tree)->chld->sibl->sibl) == \
+			if (is_command_suffix(tokenLst, &(*tree)->chld->sibl->sibl) == \
 																		SUCCESS)
 				return (SUCCESS);
 			else
@@ -74,14 +76,14 @@ int	is_COMMAND(t_TokenLst **tokenLst, t_ASTree **tree)
 		}
 		return (SUCCESS);
 	}
-	else if (is_COMMAND_WORD(tokenLst, &(*tree)->chld) == SUCCESS)
+	else if (is_command_word(tokenLst, &(*tree)->chld) == SUCCESS)
 	{
-		if (is_COMMAND_SUFFIX(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+		if (is_command_suffix(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 			return (SUCCESS);
 		else
 			return (SUCCESS);
 	}
-	print_errsyntax((*tokenLst)->token->lexeme);
+	syntax_errmsg((*tokenLst)->token->lexeme);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }

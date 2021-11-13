@@ -35,25 +35,32 @@ struct s_ASTree
 /*
 ** 			parser.c
 */
-int			build_ASTree(t_TokenLst **tokenLst, t_ASTree **tree);
-t_ASTree	*alloc_ASTree(void);
-t_ASTree	*alloc_ASTreeToken(char *lexeme, t_TokenType type);
-int			is_PIPE_SEQUENCE(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_COMMAND(t_TokenLst **tokenLst, t_ASTree **tree);
+int			build_astree(t_TokenLst **tokenLst, t_ASTree **tree);
+t_ASTree	*alloc_astree(void);
+t_ASTree	*alloc_ast_token(char *lexeme, t_TokenType type);
+int			is_pipe_sequence(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_command(t_TokenLst **tokenLst, t_ASTree **tree);
 /*
 ** 			parser1.c
 */
-int			is_COMMAND_PREFIX(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_COMMAND_WORD(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_COMMAND_SUFFIX(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_IO_REDIRECT(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_IO_FILE(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_command_prefix(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_command_word(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_command_suffix(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_io_redirect(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_io_file(t_TokenLst **tokenLst, t_ASTree **tree);
 /*
 ** 			parser2.c
 */
-int			is_IO_HERE(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_HERE_END(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_FILENAME(t_TokenLst **tokenLst, t_ASTree **tree);
-int			is_IO_NUMBER(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_io_here(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_here_end(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_filename(t_TokenLst **tokenLst, t_ASTree **tree);
+int			is_io_number(t_TokenLst **tokenLst, t_ASTree **tree);
+size_t		ast_counter(t_ASTree *node, size_t *i, t_TokenType type, \
+														t_TokenType excl_type);
+/*
+** 			parser3.c
+*/
+t_ASTree	**make_ast_arr(t_ASTree *node, t_TokenType type, t_ASTree **arr);
+char		**make_argv(t_ASTree *command);
 
 #endif

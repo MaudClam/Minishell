@@ -12,12 +12,12 @@
 
 #include "lexer.h"
 
-int	checkToken_stepTokenLst(t_TokenLst **tokenLst, t_ASTree **tree, \
+int	check_token_step_tokenlst(t_TokenLst **tokenLst, t_ASTree **tree, \
 												t_TokenType type, char *lexeme)
 {
 	if (tokenLst == NULL || tree == NULL || (type == 0 && lexeme == NULL))
 		return (ft_error_msg(\
-		"Error: bad arguments checkToken_stepTokenLst()", PARSING_ERROR));
+		"Error: bad arguments check_token_step_tokenlst()", PARSING_ERROR));
 	if (*tokenLst == NULL)
 		return (PARSING_ERROR);
 	if ((*tokenLst)->token->type != type)
@@ -35,28 +35,28 @@ int	checkToken_stepTokenLst(t_TokenLst **tokenLst, t_ASTree **tree, \
 			return (PARSING_ERROR);
 		}
 	}
-	*tree = alloc_ASTreeToken((*tokenLst)->token->lexeme, \
+	*tree = alloc_ast_token((*tokenLst)->token->lexeme, \
 													(*tokenLst)->token->type);
 	*tokenLst = (*tokenLst)->next;
 	return (SUCCESS);
 }
 
-int	is_WORD(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_word(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	return (checkToken_stepTokenLst(tokenLst, tree, WORD, NULL));
+	return (check_token_step_tokenlst(tokenLst, tree, WORD, NULL));
 }
 
-int	is_PIPE_SYMBOL(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_pipe_symbol(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	return (checkToken_stepTokenLst(tokenLst, tree, PIPE_SYMBOL, NULL));
+	return (check_token_step_tokenlst(tokenLst, tree, PIPE_SYMBOL, NULL));
 }
 
-int	is_REDIRECT_SYMBOL(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_redirect_symbol(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	return (checkToken_stepTokenLst(tokenLst, tree, REDIRECT_SYMBOL, NULL));
+	return (check_token_step_tokenlst(tokenLst, tree, REDIRECT_SYMBOL, NULL));
 }
 
-int	is_END(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_end(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	return (checkToken_stepTokenLst(tokenLst, tree, END, NULL));
+	return (check_token_step_tokenlst(tokenLst, tree, END, NULL));
 }

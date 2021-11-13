@@ -1,35 +1,37 @@
-PIPE_SEQUENCE	: COMMAND			END
-				| COMMAND			'|'				PIPE_SEQUENCE
+pipe_sequence   : command           end
+				| command           '|'             pipe_sequence
 
-COMMAND			: COMMAND_PREFIX	COMMAND_WORD	COMMAND_SUFFIX
-				| COMMAND_PREFIX	COMMAND_WORD
-				| COMMAND_PREFIX
-				| COMMAND_WORD		COMMAND_SUFFIX
-				| COMMAND_WORD
+command         | simple_command
 
-COMMAND_WORD	: WORD
+simple_command  : command_prefix    command_word    command_suffix
+                | command_prefix    command_word
+                | command_prefix
+                | command_word      command_suffix
+                | command_word
 
-COMMAND_PREFIX	:            		IO_REDIRECT
-				| COMMAND_PREFIX	IO_REDIRECT
+command_word	: WORD
 
-COMMAND_SUFFIX	:					IO_REDIRECT
-				| COMMAND_SUFFIX	IO_REDIRECT
-				|					WORD
-				| COMMAND_SUFFIX	WORD
+command_prefix	:            		io_redirect
+                | command_prefix    io_redirect
 
-IO_REDIRECT		:					IO_FILE
-				| IO_NUMBER			IO_FILE
-				|					IO_HERE
-				| IO_NUMBER			IO_HERE
+command_suffix	:                   io_redirect
+                | command_suffix    io_redirect
+                |                   WORD
+                | command_suffix	WORD
 
-IO_FILE			: '<'				FILENAME
-				| '>'				FILENAME
-				| '>>'				FILENAME
+io_redirect     :                   io_file
+                | io_number         io_file
+                |                   io_here
+                | io_number         io_here
+
+io_file         : '<'               filename
+                | '>'               filename
+                | '>>'              filename
 				
-IO_HERE         : '<<'				HERE_END
+io_here         : '<<'              here_end
 
-HERE_END		: WORD
+here_end		: WORD
 
-FILENAME		: WORD
+filename		: WORD
 
-IO_NUMBER		: WORD[0;9]
+io_number		: WORD[0;9]

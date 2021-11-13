@@ -23,6 +23,7 @@ SRCS =		ft_arrsize.c \
 			ft_is_functions1.c \
 			ft_itoa_lc.c \
 			ft_lc.c \
+			ft_lc1.c \
 			ft_lst_functions.c \
 			ft_lst_functions1.c \
 			ft_mem_functions.c \

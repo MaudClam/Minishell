@@ -25,7 +25,7 @@ static char	*unquoter(char **line, size_t *i)
 		(*i)++;
 	if ((*line)[*i] == '\0')
 	{
-		if (join_newReadline(line) != SUCCESS)
+		if (join_newreadline(line) != SUCCESS)
 			return (NULL);
 		*i = start - 1;
 		str = unquoter(line, i);
@@ -34,7 +34,7 @@ static char	*unquoter(char **line, size_t *i)
 	{
 		str = ft_substr_lc(*line, start, (*i)++ - start);
 		if (str == NULL)
-			ft_error_exit(strerror(ENOMEM), ENOMEM);
+			error_exit(strerror(ENOMEM), ENOMEM);
 	}
 	add_history(*line);
 	return (str);
@@ -54,14 +54,14 @@ int	quoted_word(char **line, size_t *i, t_TokenLst **tokenLst)
 			return (ERROR);
 		lexeme = ft_strjoin_lc(lexeme, unquoted);
 		if (lexeme == NULL)
-			ft_error_exit(strerror(ENOMEM), ENOMEM);
+			error_exit(strerror(ENOMEM), ENOMEM);
 	}
 	if (lexeme != NULL && lexeme[0] != '\0')
 		new_tokenAdd(lexeme, WORD, tokenLst);
 	return (SUCCESS);
 }
 
-size_t	lexeme_WORD(char *str, t_TokenLst **tokenLst)
+size_t	lexeme_word(char *str, t_TokenLst **tokenLst)
 {
 	int		i;
 	char	*lexeme;
@@ -71,23 +71,23 @@ size_t	lexeme_WORD(char *str, t_TokenLst **tokenLst)
 		i++;
 	lexeme = ft_substr_lc(str, 0, i);
 	if (lexeme == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	new_tokenAdd(lexeme, WORD, tokenLst);
 	return (i);
 }
 
-size_t	lexeme_PIPE_SYMBOL(char *str, t_TokenLst **tokenLst)
+size_t	lexeme_pipe_symbol(char *str, t_TokenLst **tokenLst)
 {
 	char	*lexeme;
 
 	lexeme = ft_substr_lc(&str[0], 0, 1);
 	if (lexeme == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	new_tokenAdd(lexeme, PIPE_SYMBOL, tokenLst);
 	return (1);
 }
 
-size_t	lexeme_REDIRECT_SYMBOL(char *str, t_TokenLst **tokenLst)
+size_t	lexeme_redirect_symbol(char *str, t_TokenLst **tokenLst)
 {
 	char	*lexeme;
 
@@ -99,7 +99,7 @@ size_t	lexeme_REDIRECT_SYMBOL(char *str, t_TokenLst **tokenLst)
 		return (2);
 	}
 	else if (lexeme == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	lexeme = ft_substr_lc(str, 0, 1);
 	if (lexeme && (ft_strcmp(lexeme, "<") == SUCCESS || \
 				   ft_strcmp(lexeme, ">") == SUCCESS))
@@ -108,6 +108,6 @@ size_t	lexeme_REDIRECT_SYMBOL(char *str, t_TokenLst **tokenLst)
 		return (1);
 	}
 	else if (lexeme == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	return (0);
 }

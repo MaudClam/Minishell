@@ -6,7 +6,7 @@
 /*   By: mclam <mclam@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 01:30:59 by mclam             #+#    #+#             */
-/*   Updated: 2021/09/19 01:30:59 by mclam            ###   ########.fr       */
+/*   Updated: 2021/11/07 01:25:29 by mclam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@
 # include <stdint.h>
 # include <stdio.h>//FIXME
 
-# define FREE_TO_FIX	(void *)1
-# define FREE_ALL		NULL
-# define FIX_POINTER	(void *)-1
-# define U_INT			unsigned int
+# define TRUE				1
+# define FALSE				0
+# define PUT_BARRIER		(void *)1
+# define FREE_TO_BARRIER	(void *)2
+# define PUT_HARDBARRIER	(void *)3
+# define MOVE_PTRS_TO_BEGIN	(void *)4
+# define FREE_ALL			NULL
+# define U_INT				unsigned int
 
 typedef struct s_list	t_list;
 typedef struct s_lc		t_lc;
@@ -62,10 +66,10 @@ char	*ft_substr(const char *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
-struct					s_list
+struct				s_list
 {
-	void				*content;
-	struct s_list		*next;
+	void			*content;
+	struct s_list	*next;
 };
 
 void	ft_lstadd_back(t_list **lst, t_list *new);
@@ -80,9 +84,9 @@ int		ft_lstsize(t_list *lst);
 
 struct s_lc
 {
-	char				flag;
-	void				*ptr;
-	struct s_lc			*next;
+	unsigned char	flag;
+	void			*ptr;
+	struct s_lc		*next;
 };
 
 void	*lc(void *ptr);
@@ -91,6 +95,9 @@ char	**ft_splitset_lc(char const *s, char const *set);
 char	*ft_strdup_lc(const char *s1);
 void	*ft_calloc_lc(size_t count, size_t size);
 char	*ft_strjoin_lc(char const *s1, char const *s2);
+char	*ft_strjoin3_lc(char const *s1, char const *s2, char const *s3);
+char	*ft_strjoin4_lc(char const *s1, char const *s2, char const *s3, \
+																char const *s4);
 char	*ft_strtrim_lc(char const *s1, char const *set);
 char	*ft_indexname_lc(char const *name, int index, char const *extension);
 t_list	*ft_lstnew_lc(void *content);

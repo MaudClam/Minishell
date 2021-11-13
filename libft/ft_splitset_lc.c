@@ -81,7 +81,7 @@ char	**ft_splitset_lc(char const *s, char const *set)
 	split = lc(malloc(sizeof(char *) * (word_cnt + 1)));
 	if (!split)
 	{
-		ft_error_msg("malloc() error in ft_splitset_lc() function", ENOMEM);
+		ft_error_msg("lbft: malloc() error in ft_splitset_lc()", ENOMEM);
 		errno = ENOMEM;
 		return (NULL);
 	}

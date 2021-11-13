@@ -30,7 +30,7 @@ char	*ft_strdup(const char *s1)
 	s2 = malloc(sizeof(char) * n);
 	if (!s2)
 	{
-		ft_error_msg("malloc() error in ft_strdup_lc() function", ENOMEM);
+		ft_error_msg("lbft: malloc() error in ft_strdup_lc() function", ENOMEM);
 		errno = ENOMEM;
 		return (NULL);
 	}

@@ -1,16 +1,22 @@
 NAME			=	minishell
 
-SRCS			=   srcs/main.c \
+SRCS			=   srcs/env.c \
+					srcs/env1.c \
+					srcs/env2.c \
+					srcs/executer.c \
+					srcs/executer1.c \
 					srcs/lexer.c \
 					srcs/lexer1.c \
 					srcs/lexer2.c \
+					srcs/main.c \
 					srcs/parser.c \
 					srcs/parser1.c \
 					srcs/parser2.c \
-					srcs/executer.c \
+					srcs/parser3.c \
 					srcs/utils.c \
 					srcs/utils1.c \
-					srcs/utils2.c
+					srcs/utils2.c \
+					srcs/utils3.c
 
 LIBFT			=	${LIBFTDIR}libft.a
 LIBFTDIR		=	libft/

@@ -54,6 +54,7 @@ void	ft_putnbr_fd(int n, int fd)
 {
 	int		dgts;
 	int		nb_;
+	char	c;
 
 	dgts = 1;
 	n = spec_cond(n, fd);
@@ -65,7 +66,8 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	while (dgts != 0)
 	{
-		ft_putchar_fd(n / dgts + '0', fd);
+		c = n / dgts + '0';
+		write(fd, &c, 1);
 		n = n % dgts;
 		dgts = dgts / 10;
 	}

@@ -12,14 +12,14 @@
 
 #include "parser.h"
 
-int	is_COMMAND_PREFIX(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_command_prefix(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, COMMAND_PREFIX);
+	*tree = alloc_ast_token(NULL, COMMAND_PREFIX);
 	if ((*tokenLst)->token->type == REDIRECT_SYMBOL)
 	{
-		if (is_IO_REDIRECT(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_io_redirect(tokenLst, &(*tree)->chld) == SUCCESS)
 		{
-			if (is_COMMAND_PREFIX(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+			if (is_command_prefix(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 				return (SUCCESS);
 			return (SUCCESS);
 		}
@@ -28,33 +28,33 @@ int	is_COMMAND_PREFIX(t_TokenLst **tokenLst, t_ASTree **tree)
 	return (PARSING_ERROR);
 }
 
-int	is_COMMAND_WORD(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_command_word(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, COMMAND_WORD);
+	*tree = alloc_ast_token(NULL, COMMAND_WORD);
 	if ((*tokenLst)->token->type == WORD)
-		if (is_WORD(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 			return (SUCCESS);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }
 
-int	is_COMMAND_SUFFIX(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_command_suffix(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, COMMAND_SUFFIX);
+	*tree = alloc_ast_token(NULL, COMMAND_SUFFIX);
 	if ((*tokenLst)->token->type == REDIRECT_SYMBOL)
 	{
-		if (is_IO_REDIRECT(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_io_redirect(tokenLst, &(*tree)->chld) == SUCCESS)
 		{
-			if (is_COMMAND_SUFFIX(tokenLst, &(*tree)->sibl) == SUCCESS)
+			if (is_command_suffix(tokenLst, &(*tree)->sibl) == SUCCESS)
 				return (SUCCESS);
 			return (SUCCESS);
 		}
 	}
 	if ((*tokenLst)->token->type == WORD)
 	{
-		if (is_WORD(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 		{
-			if (is_COMMAND_SUFFIX(tokenLst, &(*tree)->sibl) == SUCCESS)
+			if (is_command_suffix(tokenLst, &(*tree)->sibl) == SUCCESS)
 				return (SUCCESS);
 			return (SUCCESS);
 		}
@@ -63,40 +63,40 @@ int	is_COMMAND_SUFFIX(t_TokenLst **tokenLst, t_ASTree **tree)
 	return (PARSING_ERROR);
 }
 
-int	is_IO_REDIRECT(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_io_redirect(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, IO_REDIRECT);
-	if (is_IO_FILE(tokenLst, &(*tree)->chld) == SUCCESS)
+	*tree = alloc_ast_token(NULL, IO_REDIRECT);
+	if (is_io_file(tokenLst, &(*tree)->chld) == SUCCESS)
 		return (SUCCESS);
-	if (is_IO_NUMBER(tokenLst, &(*tree)->chld) == SUCCESS)
-		if (is_IO_FILE(tokenLst, &(*tree)->sibl) == SUCCESS)
+	if (is_io_number(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_io_file(tokenLst, &(*tree)->sibl) == SUCCESS)
 			return (SUCCESS);
-	if (is_IO_HERE(tokenLst, &(*tree)->chld) == SUCCESS)
+	if (is_io_here(tokenLst, &(*tree)->chld) == SUCCESS)
 		return (SUCCESS);
-	if (is_IO_NUMBER(tokenLst, &(*tree)->chld) == SUCCESS)
-		if (is_IO_HERE(tokenLst, &(*tree)->sibl) == SUCCESS)
+	if (is_io_number(tokenLst, &(*tree)->chld) == SUCCESS)
+		if (is_io_here(tokenLst, &(*tree)->sibl) == SUCCESS)
 			return (SUCCESS);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }
 
-int	is_IO_FILE(t_TokenLst **tokenLst, t_ASTree **tree)
+int	is_io_file(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ASTreeToken(NULL, IO_FILE);
+	*tree = alloc_ast_token(NULL, IO_FILE);
 	if ((*tokenLst)->token->lexeme != NULL)
 		if (ft_strcmp((*tokenLst)->token->lexeme, "<") == SUCCESS)
-			if (is_REDIRECT_SYMBOL(tokenLst, &(*tree)->chld) == SUCCESS)
-				if (is_FILENAME(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+			if (is_redirect_symbol(tokenLst, &(*tree)->chld) == SUCCESS)
+				if (is_filename(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 					return (SUCCESS);
 	if ((*tokenLst)->token->lexeme != NULL)
 		if (ft_strcmp((*tokenLst)->token->lexeme, ">") == SUCCESS)
-			if (is_REDIRECT_SYMBOL(tokenLst, &(*tree)->chld) == SUCCESS)
-				if (is_FILENAME(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+			if (is_redirect_symbol(tokenLst, &(*tree)->chld) == SUCCESS)
+				if (is_filename(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 					return (SUCCESS);
 	if ((*tokenLst)->token->lexeme != NULL)
 		if (ft_strcmp((*tokenLst)->token->lexeme, ">>") == SUCCESS)
-			if (is_REDIRECT_SYMBOL(tokenLst, &(*tree)->chld) == SUCCESS)
-				if (is_FILENAME(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
+			if (is_redirect_symbol(tokenLst, &(*tree)->chld) == SUCCESS)
+				if (is_filename(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
 					return (SUCCESS);
 	*tree = NULL;
 	return (PARSING_ERROR);

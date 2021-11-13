@@ -43,7 +43,7 @@ static void	print_PT(t_ASTree *tree, int indent)
 	int			i;
 
 	i = indent;
-	if (tree)
+	if (tree != NULL)
 	{
 		while (--i >= 0)
 			printf(" ");
@@ -56,7 +56,7 @@ static void	print_PT(t_ASTree *tree, int indent)
 	}
 }
 
-void	print_ASTree(t_ASTree *tree)
+void	print_astree(t_ASTree *tree)
 {
 	printf(BOLD"ASTree:\n"DEFAULT);
 	print_PT(tree, 0);

@@ -66,26 +66,26 @@ struct s_TokenLst
 /*
 **		lexer.c
 */
-int		build_tokenList(char *line, t_TokenLst **tokenLst);
+int		build_tokenlist(char *line, t_TokenLst **tokenLst);
 t_Token	*new_token(char *lexeme, t_TokenType type);
 t_Token	*new_tokenAdd(char *lexeme, t_TokenType type, t_TokenLst **tokenLst);
-void	tokenAdd_back(t_TokenLst **tokenLst, t_Token *token);
-int		join_newReadline(char **line);
+void	tokenadd_back(t_TokenLst **tokenLst, t_Token *token);
+int		join_newreadline(char **line);
 /*
 **		lexer1.c
 */
 int		quoted_word(char **line, size_t *i, t_TokenLst **tokenLst);
-size_t	lexeme_WORD(char *str, t_TokenLst **tokenLst);
-size_t	lexeme_PIPE_SYMBOL(char *str, t_TokenLst **tokenLst);
-size_t	lexeme_REDIRECT_SYMBOL(char *str, t_TokenLst **tokenLst);
+size_t	lexeme_word(char *str, t_TokenLst **tokenLst);
+size_t	lexeme_pipe_symbol(char *str, t_TokenLst **tokenLst);
+size_t	lexeme_redirect_symbol(char *str, t_TokenLst **tokenLst);
 /*
 **		lexer2.c
 */
-int		checkToken_stepTokenLst(t_TokenLst **tokenLst, t_ASTree **tree, \
+int		check_token_step_tokenlst(t_TokenLst **tokenLst, t_ASTree **tree, \
 												t_TokenType type, char *lexeme);
-int		is_WORD(t_TokenLst **tokenLst, t_ASTree **tree);
-int		is_PIPE_SYMBOL(t_TokenLst **tokenLst, t_ASTree **tree);
-int		is_REDIRECT_SYMBOL(t_TokenLst **tokenLst, t_ASTree **tree);
-int		is_END(t_TokenLst **tokenLst, t_ASTree **tree);
+int		is_word(t_TokenLst **tokenLst, t_ASTree **tree);
+int		is_pipe_symbol(t_TokenLst **tokenLst, t_ASTree **tree);
+int		is_redirect_symbol(t_TokenLst **tokenLst, t_ASTree **tree);
+int		is_end(t_TokenLst **tokenLst, t_ASTree **tree);
 
 #endif

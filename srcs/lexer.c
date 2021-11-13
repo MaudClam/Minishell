@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-int	build_tokenList(char *line, t_TokenLst **tokenLst)
+int	build_tokenlist(char *line, t_TokenLst **tokenLst)
 {
 	size_t	i;
 
@@ -23,11 +23,11 @@ int	build_tokenList(char *line, t_TokenLst **tokenLst)
 			quoted_word(&line, &i, tokenLst) != SUCCESS)
 			return (ERROR);
 		else if (ft_isinset(line[i], WORD_CHARSET) == TRUE)
-			i += lexeme_WORD(&line[i], tokenLst);
+			i += lexeme_word(&line[i], tokenLst);
 		else if (ft_isinset(line[i], PIPE_CHARSET) == TRUE)
-			i += lexeme_PIPE_SYMBOL(&line[i], tokenLst);
+			i += lexeme_pipe_symbol(&line[i], tokenLst);
 		else if (ft_isinset(line[i], REDIRECT_CHARSET) == TRUE)
-			i += lexeme_REDIRECT_SYMBOL(&line[i], tokenLst);
+			i += lexeme_redirect_symbol(&line[i], tokenLst);
 		else if (ft_isinset(line[i], BLANK_CHARSET) == TRUE)
 			while (ft_isinset(line[i], BLANK_CHARSET) == TRUE)
 				i++;
@@ -43,7 +43,7 @@ t_Token	*new_tokenAdd(char *lexeme, t_TokenType type, t_TokenLst **tokenLst)
 	t_Token	*token;
 
 	token = new_token(lexeme, type);
-	tokenAdd_back(tokenLst, token);
+	tokenadd_back(tokenLst, token);
 	return (token);
 }
 
@@ -58,11 +58,11 @@ t_Token	*new_token(char *lexeme, t_TokenType type)
 		token->type = type;
 	}
 	else
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	return (token);
 }
 
-void	tokenAdd_back(t_TokenLst **tokenLst, t_Token *token)
+void	tokenadd_back(t_TokenLst **tokenLst, t_Token *token)
 {
 	t_TokenLst	*tmp;
 	t_TokenLst	*new;
@@ -83,10 +83,10 @@ void	tokenAdd_back(t_TokenLst **tokenLst, t_Token *token)
 			*tokenLst = new;
 	}
 	else
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 }
 
-int	join_newReadline(char **line)
+int	join_newreadline(char **line)
 {
 	char	*str;
 
@@ -99,6 +99,6 @@ int	join_newReadline(char **line)
 	free (str);
 	str = NULL;
 	if (*line == NULL)
-		ft_error_exit(strerror(ENOMEM), ENOMEM);
+		error_exit(strerror(ENOMEM), ENOMEM);
 	return (SUCCESS);
 }
