@@ -24,8 +24,6 @@ t_ASTree	*alloc_astree(void)
 	t_ASTree	*tree;
 
 	tree = ft_calloc_lc(sizeof(t_ASTree), 1);
-	if (tree == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
 	return (tree);
 }
 
@@ -40,7 +38,7 @@ t_ASTree	*alloc_ast_token(char *lexeme, t_TokenType type)
 
 int	is_pipe_sequence(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, PIPE_SEQUENCE);
+	*tree = alloc_ast_token(NULL, pipe_sequence);
 	if (is_command(tokenLst, &(*tree)->chld) == SUCCESS)
 	{
 		if ((*tokenLst)->token->type == END)
@@ -57,13 +55,12 @@ int	is_pipe_sequence(t_TokenLst **tokenLst, t_ASTree **tree)
 		}
 	}
 	*tree = NULL;
-	syntax_errmsg((*tokenLst)->token->lexeme);
 	return (PARSING_ERROR);
 }
 
 int	is_command(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, COMMAND);
+	*tree = alloc_ast_token(NULL, command);
 	if (is_command_prefix(tokenLst, &(*tree)->chld) == SUCCESS)
 	{
 		if (is_command_word(tokenLst, &(*tree)->chld->sibl) == SUCCESS)
@@ -83,7 +80,6 @@ int	is_command(t_TokenLst **tokenLst, t_ASTree **tree)
 		else
 			return (SUCCESS);
 	}
-	syntax_errmsg((*tokenLst)->token->lexeme);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }

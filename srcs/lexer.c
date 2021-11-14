@@ -34,7 +34,7 @@ int	build_tokenlist(char *line, t_TokenLst **tokenLst)
 		else
 			i++;
 	}
-	new_tokenAdd("newline", END, tokenLst);
+	new_tokenAdd("\\n", END, tokenLst);
 	return (SUCCESS);
 }
 
@@ -52,13 +52,8 @@ t_Token	*new_token(char *lexeme, t_TokenType type)
 	t_Token	*token;
 
 	token = lc(malloc(sizeof(t_Token)));
-	if (token)
-	{
-		token->lexeme = lexeme;
-		token->type = type;
-	}
-	else
-		error_exit(strerror(ENOMEM), ENOMEM);
+	token->lexeme = lexeme;
+	token->type = type;
 	return (token);
 }
 
@@ -69,21 +64,16 @@ void	tokenadd_back(t_TokenLst **tokenLst, t_Token *token)
 
 	tmp = *tokenLst;
 	new = lc(malloc(sizeof(t_TokenLst)));
-	if (new)
+	new->token = token;
+	new->next = NULL;
+	if (tmp)
 	{
-		new->token = token;
-		new->next = NULL;
-		if (tmp)
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-		else
-			*tokenLst = new;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
 	else
-		error_exit(strerror(ENOMEM), ENOMEM);
+		*tokenLst = new;
 }
 
 int	join_newreadline(char **line)
@@ -98,7 +88,5 @@ int	join_newreadline(char **line)
 	*line = ft_strjoin_lc(ft_strjoin_lc(*line, "\n"), str);
 	free (str);
 	str = NULL;
-	if (*line == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
 	return (SUCCESS);
 }

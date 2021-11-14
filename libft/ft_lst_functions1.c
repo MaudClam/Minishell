@@ -122,9 +122,6 @@ t_list	*ft_lstnew_lc(void *content)
 		elem->next = NULL;
 	}
 	else
-	{
-		ft_error_msg("lbft: malloc() error in ft_lstnew_lc() function", ENOMEM);
-		errno = ENOMEM;
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_lstnew_lc()", ENOMEM);
 	return (elem);
 }

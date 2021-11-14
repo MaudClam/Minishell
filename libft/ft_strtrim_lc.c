@@ -35,11 +35,7 @@ char	*ft_strtrim_lc(char const *s1, char const *set)
 		right--;
 	strtrim = lc(malloc(sizeof(char) * (right - left + 1)));
 	if (!strtrim)
-	{
-		ft_error_msg("lbft: malloc() error in ft_strtrim_lc()", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_strtrim_lc()", ENOMEM);
 	i = 0;
 	while (s1 && left < right)
 		strtrim[i++] = s1[left++];

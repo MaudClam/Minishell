@@ -44,14 +44,11 @@ char	*type2char(t_TokenType type)
 	{
 		lc(PUT_BARRIER);
 		tokenTypes = ft_splitset_lc(TOKEN_TYPES_SET, ",; |");
-		if (tokenTypes != NULL)
-			arrsize = ft_arrsize((const void **)tokenTypes);
+		arrsize = ft_arrsize((const void **)tokenTypes);
 		lc(MOVE_PTRS_TO_BEGIN);
 	}
-	if (tokenTypes != NULL && type >= 0 && type < arrsize)
+	if (type >= 0 && type < arrsize)
 		return (tokenTypes[type]);
-	else if (tokenTypes == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
-	ft_putendl_fd("Error: forbidden argument in type2char()", STDERR_FILENO);
+	ft_putendl_fd("Error: forbidden argument in type2char()\n", STDERR_FILENO);
 	return (NULL);
 }

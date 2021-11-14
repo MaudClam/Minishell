@@ -29,8 +29,6 @@ static void	etree_to_env1(t_eTree *root, size_t *i, char **env)
 	{
 		etree_to_env1(root->left, i, env);
 		env[*i] = ft_strjoin3_lc(root->name, "=", root->vol);
-		if (env[*i] == NULL)
-			error_exit(strerror(ENOMEM), ENOMEM);
 		(*i)++;
 		etree_to_env1(root->right, i, env);
 	}
@@ -46,16 +44,9 @@ char	**etree_to_env(t_eTree *root)
 	{
 		i = 0;
 		i = etree_counter(root, &i);
-		lc(PUT_BARRIER);
 		env = ft_calloc_lc(sizeof(char *), i + 1);
-		if (env != NULL)
-		{
-			i = 0;
-			etree_to_env1(root, &i, env);
-		}
-		else
-			error_exit(strerror(ENOMEM), ENOMEM);
-		lc(MOVE_PTRS_TO_BEGIN);
+		i = 0;
+		etree_to_env1(root, &i, env);
 	}
 	return (env);
 }

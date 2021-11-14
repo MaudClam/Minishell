@@ -28,13 +28,9 @@ int	errmsg(char *str, int err)
 	if (prompt == NULL)
 	{
 		prompt = ft_strdup_lc(str);
-		if (prompt == NULL)
-			error_exit(strerror(ENOMEM), ENOMEM);
 		return (SUCCESS);
 	}
 	errmsg = ft_strjoin_lc(prompt, str);
-	if (errmsg == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
 	ft_putstr_fd(errmsg, STDERR_FILENO);
 	return (err);
 }
@@ -51,33 +47,6 @@ void	syntax_errmsg(char *str)
 {
 	char	*msg;
 
-	msg = ft_strjoin_lc("syntax error near unexpected token '", str);
-	if (msg == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
-	msg = ft_strjoin_lc(msg, "'\n");
-	if (msg == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
+	msg = ft_strjoin3_lc("syntax error near unexpected token '", str, "'\n");
 	errmsg(msg, ERROR);
-}
-
-int	error_exit(char *str, int err)
-{
-	errmsg(str, err);
-	ft_putstr_fd(" (exit code: ", STDERR_FILENO);
-	ft_putnbr_fd(err, STDERR_FILENO);
-	ft_putstr_fd(")\n", STDERR_FILENO);
-	lc(FREE_ALL);
-	exit (err);
-}
-
-int	error_exit2(char *str1, char *str2, int err)
-{
-	errmsg(str1, err);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(str2, STDERR_FILENO);
-	ft_putstr_fd(" (exit code: ", STDERR_FILENO);
-	ft_putnbr_fd(err, STDERR_FILENO);
-	ft_putstr_fd(")\n", STDERR_FILENO);
-	lc(FREE_ALL);
-	exit (err);
 }

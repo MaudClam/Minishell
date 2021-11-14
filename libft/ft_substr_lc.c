@@ -28,11 +28,7 @@ char	*ft_substr_lc(const char *s, unsigned int start, size_t len)
 	n = fis(len + start > len_s, fis(len_s > start, len_s - start, 0), len);
 	substr = lc(malloc(sizeof(char) * (n + 1)));
 	if (!substr)
-	{
-		ft_error_msg("lbft: malloc() error in ft_substr() function", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_substr_lc()", ENOMEM);
 	if (start < len_s)
 		ft_memcpy(substr, (const void *)(s + start), n);
 	*(char *)(substr + n) = '\0';

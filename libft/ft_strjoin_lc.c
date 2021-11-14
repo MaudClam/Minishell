@@ -38,11 +38,7 @@ char	*ft_strjoin_lc(char const *s1, char const *s2)
 	j = 0;
 	str = lc(malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)));
 	if (!str)
-	{
-		ft_error_msg("lbft: malloc() error in ft_strjoin_lc()", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_strjoin_lc()", ENOMEM);
 	if (s1)
 		j = str_j_copy(str, s1, j);
 	if (s2)

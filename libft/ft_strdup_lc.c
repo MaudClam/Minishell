@@ -29,11 +29,7 @@ char	*ft_strdup_lc(const char *s1)
 	n = ft_strlen(s1) + 1;
 	s2 = lc(malloc(sizeof(char) * n));
 	if (!s2)
-	{
-		ft_error_msg("lbft: malloc() error in ft_strdup_lc() function", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_strdup_lc()", ENOMEM);
 	ft_memcpy(s2, s1, n);
 	*(s2 + n - 1) = '\0';
 	return (s2);

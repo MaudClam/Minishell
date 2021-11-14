@@ -21,9 +21,9 @@ typedef struct s_TokenLst	t_TokenLst;
 typedef struct s_ASTree		t_ASTree;
 typedef struct s_var		t_var;
 
-# define TOKEN_TYPES_SET	"EMPTY,WORD,PIPE_SYMBOL,REDIRECT_SYMBOL,\
-COMMAND_PREFIX,COMMAND,COMMAND_WORD,COMMAND_SUFFIX,PIPE_SEQUENCE,IO_REDIRECT,\
-IO_FILE,IO_HERE,HERE_END,FILENAME,IO_NUMBER,END"
+# define TOKEN_TYPES_SET	"	empty,BLANK,WORD,PIPE_SYMBOL,REDIRECT_SYMBOL,\
+END,simple_command,command_prefix,command,command_word,command_suffix,\
+pipe_sequence,io_redirect,io_file,io_here,here_end,filename,io_number,"
 # define BLANK_CHARSET		" \t\n\v\f\r"
 # define QUOTES_CHARSET		"\"\'"
 # define WORD_CHARSET		"!$#%&()*+,-./=?_\
@@ -33,22 +33,24 @@ IO_FILE,IO_HERE,HERE_END,FILENAME,IO_NUMBER,END"
 
 enum e_TokenType
 {
-	EMPTY,
+	empty,
+	BLANK,
 	WORD,
 	PIPE_SYMBOL,
 	REDIRECT_SYMBOL,
-	COMMAND_PREFIX,
-	COMMAND,
-	COMMAND_WORD,
-	COMMAND_SUFFIX,
-	PIPE_SEQUENCE,
-	IO_REDIRECT,
-	IO_FILE,
-	IO_HERE,
-	HERE_END,
-	FILENAME,
-	IO_NUMBER,
 	END,
+	simple_command,
+	command_prefix,
+	command,
+	command_word,
+	command_suffix,
+	pipe_sequence,
+	io_redirect,
+	io_file,
+	io_here,
+	here_end,
+	filename,
+	io_number,
 };
 
 struct s_Token

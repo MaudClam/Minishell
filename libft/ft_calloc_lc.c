@@ -27,11 +27,7 @@ void	*ft_calloc_lc(size_t count, size_t size)
 
 	ptr = lc(malloc(count * size));
 	if (!ptr)
-	{
-		ft_error_msg("lbft: malloc() error in ft_calloc_lc() function", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory inft_calloc_lc()", ENOMEM);
 	ft_bzero(ptr, count * size);
 	return (ptr);
 }

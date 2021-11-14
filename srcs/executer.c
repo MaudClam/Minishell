@@ -12,23 +12,23 @@
 
 #include "minishell.h"
 
-void	execute_astree(t_ASTree *root, t_var *v)
-{
-	execute_pipe_sequence(root, v);
-}
+//void	execute_astree(t_ASTree *root, t_var *v)
+//{
+//	execute_pipe_sequence(root, v);
+//}
 
-void	execute_pipe_sequence(t_ASTree *node, t_var *v)
-{
-	if (node != NULL)
-	{
-		if (node->data->type == COMMAND)
-			execute_command(node, v);
-		else if (node->data->type != END)
-			if (node->sibl->data->type == PIPE_SYMBOL)
-				if (node->sibl->sibl->data->type == PIPE_SEQUENCE)
-						execute_pipe_sequence(node, v);
-	}
-}
+//void	execute_pipe_sequence(t_ASTree *node, t_var *v)
+//{
+//	if (node != NULL)
+//	{
+//		if (node->data->type == command)
+//			execute_command(node, v);
+//		else if (node->data->type != END)
+//			if (node->sibl->data->type == PIPE_SYMBOL)
+//				if (node->sibl->sibl->data->type == pipe_sequence)
+//						execute_pipe_sequence(node, v);
+//	}
+//}
 
 //void	execute_command_(t_var *v)
 //{
@@ -40,11 +40,11 @@ void	execute_pipe_sequence(t_ASTree *node, t_var *v)
 //
 //	cmds = NULL;
 //	pipes = 0;
-//	pipes = ast_counter(v->tree, &pipes, COMMAND, 0);
+//	pipes = ast_counter(v->tree, &pipes, command, 0);
 //	pid = ft_calloc_lc(sizeof(pid_t), pipes);
 //	if (pid == NULL)
 //		error_exit(strerror(ENOMEM), ENOMEM);
-//	cmds = make_ast_arr(v->tree, COMMAND, cmds);
+//	cmds = make_ast_arr(v->tree, command, cmds);
 //	v->env = etree_to_env(v->etree);
 ////	close(0);
 ////	close(1);

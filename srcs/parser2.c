@@ -14,7 +14,7 @@
 
 int	is_io_here(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, IO_HERE);
+	*tree = alloc_ast_token(NULL, io_here);
 	if ((*tokenLst)->token->lexeme != NULL)
 		if (ft_strcmp((*tokenLst)->token->lexeme, "<<") == SUCCESS)
 			if (is_redirect_symbol(tokenLst, &(*tree)->chld) == SUCCESS)
@@ -26,24 +26,22 @@ int	is_io_here(t_TokenLst **tokenLst, t_ASTree **tree)
 
 int	is_here_end(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, HERE_END);
+	*tree = alloc_ast_token(NULL, here_end);
 	if ((*tokenLst)->token->type == WORD)
 		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 			return (SUCCESS);
-	syntax_errmsg((*tokenLst)->token->lexeme);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }
 
 int	is_filename(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, FILENAME);
+	*tree = alloc_ast_token(NULL, filename);
 	if ((*tokenLst)->token->type == WORD)
 	{
 		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 			return (SUCCESS);
 	}
-	syntax_errmsg((*tokenLst)->token->lexeme);
 	*tree = NULL;
 	return (PARSING_ERROR);
 }
@@ -59,7 +57,7 @@ int	is_io_number(t_TokenLst **tokenLst, t_ASTree **tree)
 		while ((*tokenLst)->token->lexeme[i] != '\0')
 			if (ft_isdigit((*tokenLst)->token->lexeme[i++]) != TRUE)
 				return (PARSING_ERROR);
-		*tree = alloc_ast_token(NULL, IO_NUMBER);
+		*tree = alloc_ast_token(NULL, io_number);
 		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 			return (SUCCESS);
 		else

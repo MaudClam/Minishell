@@ -98,11 +98,11 @@ static void	*lc_newptr(t_lc **lc, void *ptr)
 		tmp->ptr = ptr;
 	else
 	{
-		ft_error_msg("lbft: malloc() error in lc() function", ENOMEM);
 		lc_freemem(lc, (uintptr_t)FREE_ALL);
 		free(ptr);
 		ptr = NULL;
 		errno = ENOMEM;
+		ft_error_exit("libft: Cannot allocate memory lc()", ENOMEM);
 	}
 	return (ptr);
 }

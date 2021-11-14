@@ -20,10 +20,22 @@ int	ft_error_msg(char *str, int err)
 
 int	ft_error_exit(char *str, int err)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putendl_fd(str, STDERR_FILENO);
 	ft_putstr_fd(" (exit code: ", STDERR_FILENO);
 	ft_putnbr_fd(err, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
+	lc(FREE_ALL);
+	exit (err);
+}
+
+int	ft_error_exit2(char *str1, char *str2, int err)
+{
+	ft_putendl_fd(str1, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(str2, STDERR_FILENO);
+	ft_putstr_fd(" (exit code: ", STDERR_FILENO);
+	ft_putnbr_fd(err, STDERR_FILENO);
+	ft_putstr_fd(")\n", STDERR_FILENO);
+	lc(FREE_ALL);
 	exit (err);
 }

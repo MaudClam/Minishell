@@ -37,8 +37,6 @@ static char	*prompt(t_var *v, char *s1, char *s2, char *s3)
 	char	*prompt;
 
 	prompt = ft_strjoin3_lc(s1, get_env(v->etree, s2), s3);
-	if (prompt == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
 	return (prompt);
 }
 

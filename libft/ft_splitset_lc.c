@@ -80,11 +80,7 @@ char	**ft_splitset_lc(char const *s, char const *set)
 		return (NULL);
 	split = lc(malloc(sizeof(char *) * (word_cnt + 1)));
 	if (!split)
-	{
-		ft_error_msg("lbft: malloc() error in ft_splitset_lc()", ENOMEM);
-		errno = ENOMEM;
-		return (NULL);
-	}
+		ft_error_exit("libft: Cannot allocate memory ft_splitset_lc()", ENOMEM);
 	splitter(split, str, set, word_cnt);
 	return (split);
 }

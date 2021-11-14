@@ -14,7 +14,7 @@
 
 int	is_command_prefix(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, COMMAND_PREFIX);
+	*tree = alloc_ast_token(NULL, command_prefix);
 	if ((*tokenLst)->token->type == REDIRECT_SYMBOL)
 	{
 		if (is_io_redirect(tokenLst, &(*tree)->chld) == SUCCESS)
@@ -30,7 +30,7 @@ int	is_command_prefix(t_TokenLst **tokenLst, t_ASTree **tree)
 
 int	is_command_word(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, COMMAND_WORD);
+	*tree = alloc_ast_token(NULL, command_word);
 	if ((*tokenLst)->token->type == WORD)
 		if (is_word(tokenLst, &(*tree)->chld) == SUCCESS)
 			return (SUCCESS);
@@ -40,7 +40,7 @@ int	is_command_word(t_TokenLst **tokenLst, t_ASTree **tree)
 
 int	is_command_suffix(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, COMMAND_SUFFIX);
+	*tree = alloc_ast_token(NULL, command_suffix);
 	if ((*tokenLst)->token->type == REDIRECT_SYMBOL)
 	{
 		if (is_io_redirect(tokenLst, &(*tree)->chld) == SUCCESS)
@@ -65,7 +65,7 @@ int	is_command_suffix(t_TokenLst **tokenLst, t_ASTree **tree)
 
 int	is_io_redirect(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, IO_REDIRECT);
+	*tree = alloc_ast_token(NULL, io_redirect);
 	if (is_io_file(tokenLst, &(*tree)->chld) == SUCCESS)
 		return (SUCCESS);
 	if (is_io_number(tokenLst, &(*tree)->chld) == SUCCESS)
@@ -82,7 +82,7 @@ int	is_io_redirect(t_TokenLst **tokenLst, t_ASTree **tree)
 
 int	is_io_file(t_TokenLst **tokenLst, t_ASTree **tree)
 {
-	*tree = alloc_ast_token(NULL, IO_FILE);
+	*tree = alloc_ast_token(NULL, io_file);
 	if ((*tokenLst)->token->lexeme != NULL)
 		if (ft_strcmp((*tokenLst)->token->lexeme, "<") == SUCCESS)
 			if (is_redirect_symbol(tokenLst, &(*tree)->chld) == SUCCESS)

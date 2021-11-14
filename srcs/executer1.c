@@ -19,7 +19,7 @@
 //
 //	if (v->debug == TRUE)
 //		printf("============EXECUTING COMMAND=========\n");
-////	argv = make_argv(COMMAND, IO_REDIRECT);
+////	argv = make_argv(command, io_redirect);
 //	v->env = etree_to_env(v->etree);
 //	if (v->debug == TRUE)
 //		print_array(argv);
@@ -54,13 +54,9 @@ char	**join_abspath_cmd(t_eTree *etree, char *command)
 
 	i = 0;
 	split_envpath = ft_splitset_lc(get_env(etree, ENV_PATH), ":");
-	if (split_envpath == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
 	while (split_envpath[i] != NULL)
 	{
 		split_envpath[i] = ft_strjoin3_lc(split_envpath[i], "/", command);
-		if (split_envpath[i] == NULL)
-			error_exit(strerror(ENOMEM), ENOMEM);
 	}
 	return (split_envpath);
 }
@@ -78,8 +74,6 @@ int	check_paths(char **paths, char **argv)
 			if (info.st_mode & S_IFDIR)
 			{
 				argv[0] = ft_strjoin_lc(paths[i], argv[0]);
-				if (argv[0])
-					error_exit(strerror(ENOMEM), ENOMEM);
 				if (stat(argv[0], &info) == 0 && info.st_mode & S_IXUSR)
 					return (SUCCESS);
 			}

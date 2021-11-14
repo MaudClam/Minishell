@@ -1,5 +1,5 @@
-pipe_sequence   : command           end
-				| command           '|'             pipe_sequence
+pipe_sequence   : command           END
+                | command           '|'             pipe_sequence
 
 command         | simple_command
 
@@ -30,8 +30,8 @@ io_file         : '<'               filename
 				
 io_here         : '<<'              here_end
 
-here_end		: WORD
+here_end        : WORD
 
-filename		: WORD
+filename        : WORD
 
-io_number		: WORD[0;9]
+io_number       : WORD[0;9]

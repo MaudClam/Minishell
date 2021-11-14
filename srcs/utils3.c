@@ -30,13 +30,3 @@ void	print_array(char **env)
 	while (env != NULL && env[i] != NULL)
 		printf("%s\n", env[i++]);
 }
-
-char	*int_to_char(int num)
-{
-	char	*str;
-	
-	str = ft_itoa_lc(num);
-	if (str == NULL)
-		error_exit(strerror(ENOMEM), ENOMEM);
-	return (str);
-}

@@ -95,8 +95,8 @@ char	**etree_to_env(t_eTree *root);
 */
 void	execute_astree(t_ASTree *root, t_var *v);
 int		execute_pipe(t_ASTree *root, t_var *v);
-void	execute_pipe_sequence(t_ASTree *root, t_var *v);
-int		execute_command(t_ASTree *root, t_var *v);
+//void	execute_pipe_sequence(t_ASTree *root, t_var *v);
+//int		execute_command(t_ASTree *root, t_var *v);
 /*
 ** 		executer1.c
 */
@@ -123,13 +123,10 @@ void	print_welcomemsg(void);
 int		errmsg(char *str, int err);
 int		errmsg2(char *str1, char *str2, int err);
 void	syntax_errmsg(char *str);
-int		error_exit(char *str, int err);
-int		error_exit2(char *str1, char *str2, int err);
 /*
 ** 		utils3.c
 */
 void	print_etree(t_eTree *root);
 void	print_array(char **env);
-char	*int_to_char(int num);
 
 #endif

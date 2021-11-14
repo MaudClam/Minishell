@@ -16,16 +16,9 @@ t_eTree	*alloc_etree_node(char *name, char *vol)
 {
 	t_eTree	*node;
 
-	lc(PUT_BARRIER);
 	node = ft_calloc_lc(sizeof(t_eTree), 1);
-	if (node != NULL)
-	{
-		node->name = name;
-		node->vol = vol;
-	}
-	else
-		error_exit(strerror(ENOMEM), ENOMEM);
-	lc(MOVE_PTRS_TO_BEGIN);
+	node->name = name;
+	node->vol = vol;
 	return (node);
 }
 
@@ -35,27 +28,12 @@ static char	**split_env(char *env)
 
 	if (env != NULL && *env != 0 && *env != '=')
 	{
-		lc(PUT_BARRIER);
 		split = ft_calloc_lc(sizeof(char *), 2);
-		if (split != NULL)
-		{
-			split[0] = ft_strdup_lc(env);
-			if (split[0] != NULL)
-			{
-				split[1] = ft_strchr(split[0], '=');
-				if (split[1] != NULL)
-				{
-					*(split[1]) = '\0';
-					split[1] = split[1] + 1;
-					return (split);
-				}
-			}
-			else
-				error_exit(strerror(ENOMEM), ENOMEM);
-		}
-		else
-			error_exit(strerror(ENOMEM), ENOMEM);
-		lc(MOVE_PTRS_TO_BEGIN);
+		split[0] = ft_strdup_lc(env);
+		split[1] = ft_strchr(split[0], '=');
+		*(split[1]) = '\0';
+		split[1] = split[1] + 1;
+		return (split);
 	}
 	return (NULL);
 }
